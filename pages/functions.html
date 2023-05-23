@@ -1,0 +1,60 @@
+<div class="refPage" id="includeThis">
+    <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+    <h3>Functions</h3>
+    <p>
+        Functions are nice little blocks of code that can be reused without retyping everything. They are <em>methods</em> of manipulating values. Functions are often used to perform a calculation and return the result, or simply calculating something
+        and changing the value automatically.
+    </p>
+    <p>For example, here is some quick code that would return a result:</p>
+    <pre class="prettyprint lang-py"><code class="language-py">
+def area(length):
+    return length * length
+
+print(&#39;The area of a 2x2 square is &#39; + area(2))
+    # Result: &quot;The area of a 2x2 square is 4&quot;
+        </code></pre>
+    <p>Next, some code that alters an already existing value:</p>
+    <pre class="prettyprint lang-py"><code class="language-py">
+changeme = &quot;value 1&quot;
+print(changeme)
+# Result: &quot;value 1&quot;
+
+def new_message(msg):
+    changeme = msg
+
+print(changeme)
+# Result: &quot;value 1&quot;
+
+new_message(&quot;hello!&quot;)
+print(changeme)
+# Result: &quot;hello!&quot;
+        </code></pre>
+    <p>As you can see in the last example, the code inside of a function only happens when that function is called. </p>
+    <p><strong>KEEP IN MIND!</strong> When you call a function, it runs! That seems self explanatory, but if you&#39;re not careful you could run into a situation where it becomes an issue.</p>
+    <p>Take this situation for example: You have a function that generates a random message. You want to use that message in multiple places, so you try the following:</p>
+    <pre class="prettyprint lang-py"><code class="language-py">
+import random
+def rand_msg():
+    msgs = [&quot;hello&quot;, &quot;goodbye&quot;, &quot;have a nice day&quot;]
+    choice = random.randint(0,len(msgs)-1) # Takes a random number between 0 and 2, the range of indexes of the msgs list
+    return msgs[choice]
+
+print(&#39;Msg 1: &#39; + rand_msg())
+print(&#39;The same msg: &#39;+ rand_msg())
+        </code></pre>
+    <p>If you ran this code multiple times, you would notice that the two print statements wouldn&#39;t always return the same message. That is because each time you use <code>rand_msg()</code>, the function runs again and a new random message is returned.</p>
+    <p>To get around this, you can set function results as variables. That feels like a mouthful, but I promise it&#39;s not complicated. Editing the code from above, we get:</p>
+    <pre class="prettyprint lang-py"><code class="language-py">
+import random
+def rand_msg():
+    msgs = [&quot;hello&quot;, &quot;goodbye&quot;, &quot;have a nice day&quot;]
+    choice = random.randint(0,len(msgs)-1) # Takes a random number between 0 and 2, the range of indexes of the msgs list
+    return msgs[choice]
+
+message = rand_msg()
+print(&#39;Msg 1: &#39; + message)
+print(&#39;The same msg: &#39;+ message)
+</code></pre>
+    <p>When you use a variable, the function only runs once: when you first assign the variable.</p>
+
+</div>

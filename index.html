@@ -1,0 +1,319 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./styles/main.css">
+    <script src="./scripts/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+    <title>Python References</title>
+</head>
+
+<body>
+    <div id="topBar">
+        <div id="header">
+            <h1>Python References &lt;/&gt;</h1>
+        </div>
+        <div id="linkDiv">
+            <ul id="linkList" class="links">
+            </ul>
+        </div>
+    </div>
+    <div class="container" page-here>
+        <div class="refPage show" id="functions-div">
+            <h3>Functions</h3>
+            <p>
+                Functions are nice little blocks of code that can be reused without retyping everything. They are <em>methods</em> of manipulating values. Functions are often used to perform a calculation and return the result, or simply calculating something
+                and changing the value automatically.
+            </p>
+            <p>For example, here is some quick code that would return a result:</p>
+            <pre class="prettyprint lang-py"><code class="language-py">
+    def area(length):
+        return length * length
+    
+    print(&#39;The area of a 2x2 square is &#39; + area(2))
+    # Result: &quot;The area of a 2x2 square is 4&quot;
+                </code></pre>
+            <p>Next, some code that alters an already existing value:</p>
+            <pre class="prettyprint lang-py"><code class="language-py">
+    changeme = &quot;value 1&quot;
+    print(changeme)
+    # Result: &quot;value 1&quot;
+
+    def new_message(msg):
+        changeme = msg
+
+    print(changeme)
+    # Result: &quot;value 1&quot;
+
+    new_message(&quot;hello!&quot;)
+    print(changeme)
+    # Result: &quot;hello!&quot;
+                </code></pre>
+            <p>As you can see in the last example, the code inside of a function only happens when that function is called. </p>
+            <p><strong>KEEP IN MIND!</strong> When you call a function, it runs! That seems self explanatory, but if you&#39;re not careful you could run into a situation where it becomes an issue.</p>
+            <p>Take this situation for example: You have a function that generates a random message. You want to use that message in multiple places, so you try the following:</p>
+            <pre class="prettyprint lang-py"><code class="language-py">
+    import random
+    def rand_msg():
+        msgs = [&quot;hello&quot;, &quot;goodbye&quot;, &quot;have a nice day&quot;]
+        choice = random.randint(0,len(msgs)-1) # Takes a random number between 0 and 2, the range of indexes of the msgs list
+        return msgs[choice]
+    
+    print(&#39;Msg 1: &#39; + rand_msg())
+    print(&#39;The same msg: &#39;+ rand_msg())
+                </code></pre>
+            <p>If you ran this code multiple times, you would notice that the two print statements wouldn&#39;t always return the same message. That is because each time you use <code>rand_msg()</code>, the function runs again and a new random message is
+                returned.
+            </p>
+            <p>To get around this, you can set function results as variables. That feels like a mouthful, but I promise it&#39;s not complicated. Editing the code from above, we get:</p>
+            <pre class="prettyprint lang-py"><code class="language-py">
+    import random
+    def rand_msg():
+        msgs = [&quot;hello&quot;, &quot;goodbye&quot;, &quot;have a nice day&quot;]
+        choice = random.randint(0,len(msgs)-1) # Takes a random number between 0 and 2, the range of indexes of the msgs list
+        return msgs[choice]
+    
+    message = rand_msg()
+    print(&#39;Msg 1: &#39; + message)
+    print(&#39;The same msg: &#39;+ message)
+        </code></pre>
+            <p>When you use a variable, the function only runs once: when you first assign the variable.</p>
+
+        </div>
+        <div class="refPage" id="lists-div">
+            <h3>Lists</h3>
+            <p>
+                Lists are used to store multiple items in one variable. Lists are the simplest form of a data collection, and the easiest to work with. Lists are extremely useful in all coding languages.</p>
+            <p>To define a list, you place values into square brackets:</p>
+            <pre class="prettyprint lang-py"><code class="language-py">
+    a_list = [&quot;this&quot;, &quot;is&quot;, &quot;a&quot;, &quot;list&quot;]
+    print(a_list)
+    # Result: [&quot;this&quot;, &quot;is&quot;, &quot;a&quot;, &quot;list&quot;]
+                </code></pre>
+            <p>Lists are <em>indexed</em>. This means that each position in the list has a number associated with it. When talking about a list position (or almost any position within coding), the index starts at 0.</p>
+            <p>For example:</p>
+            <pre class="prettyprint lang-py"><code class="language-py">
+    [&quot;value1&quot;, &quot;value2&quot;, &quot;value3&quot;]
+        0	  1	     2
+                </code></pre>
+            <p>To get an item from a certain spot in a list, you use square brackets to define the index you want:</p>
+            <pre class="prettyprint lang-py"><code class="language-py">
+    a_list = [&quot;this&quot;, &quot;is&quot;, &quot;a&quot;, &quot;list&quot;]
+    
+    print(a_list[0])
+    # Result: &quot;this&quot;
+    
+    print(a_list[2])
+    # Result: &quot;is&quot;
+                </code></pre>
+            <p>Additionally, you can get the length of a list:</p>
+            <pre class="prettyprint lang-py"><code class="language-py">
+    a_list = [&quot;this&quot;, &quot;is&quot;, &quot;a&quot;, &quot;list&quot;]
+    
+    print(len(a_list))
+    # Result: 4
+                </code></pre>
+            <p>This idea can be used for several different applications. One of the most useful, and most simple, is getting the last item from a list:</p>
+            <pre class="prettyprint lang-py"><code class="language-py">
+    a_list = [&quot;this&quot;, &quot;is&quot;, &quot;a&quot;, &quot;list&quot;]
+    
+    last_item = a_list[len(a_list)-1]
+    print(last_item)
+    # Result: &quot;list&quot;
+                </code></pre>
+            <p>Remember! A list index starts at 0, so if you want to get the last item, you need to make sure that you subtract 1 from the length (4 - 1 = 3)</p>
+
+        </div>
+        <div class="refPage" id="forLoops-div">
+            <h3>For Loops</h3>
+            <p>
+                A For loop is used for iterating over multiple items. For loops are often used with Lists, and are extremely helpful.</p>
+            <p>In python, For loops are really helpful for doing something multiple times, but to different items. For example, if you wanted to calculate the areas of several squares, you could use a For loop with a list of side lengths:</p>
+            <pre class="prettyprint lang-py"><code class="language-py">
+    sides = [2, 4, 7, 9]
+    
+    for length in sides:
+        print(&#39;The area is &#39;+ length * length)
+    
+    # Result:
+    # The area is 4
+    # The area is 16
+    # The area is 49
+    # The area is 81
+                </code></pre>
+            <p>This For loop is going through each item in the <code>sides</code> list, and assigning it to the variable <code>length</code>. Then, it is using that variable and calculating the area. The code above is the same as:</p>
+            <pre class="prettyprint lang-py"><code class="language-py">
+    sides = [2, 4, 7, 9]
+    
+    print(&#39;The area is &#39; + sides[0] * sides[0])
+    print(&#39;The area is &#39; + sides[1] * sides[1])
+    print(&#39;The area is &#39; + sides[2] * sides[2])
+    print(&#39;The area is &#39; + sides[3] * sides[3])
+                </code></pre>
+            <p>Using a For loop allows for better performing code (as well as easier to read).</p>
+            <p>However! For loops don&#39;t need to only be used with lists! If you wanted to loop through each letter in a word:</p>
+            <pre class="prettyprint lang-py"><code class="language-py">
+    for x in &quot;banana&quot;:
+        print(x)
+                </code></pre>
+            <p>If you want to loop through a range of numbers:</p>
+            <pre class="prettyprint lang-py"><code class="language-py">
+    for x in range(2, 6):
+        print(x)
+                </code></pre>
+            <p>For loops can get a bit more complicated. If you want to stop a loop, you can use a <code>break</code> statement. This could be helpful if you are looking for a certain value, and don&#39;t want to continue once you find it:</p>
+            <pre class="prettyprint lang-py"><code class="language-py">
+    for x in &quot;abcdefghijklmnopqrstuvwxyz&quot;:
+        if x == &quot;e&quot;:
+            print(&quot;I found the e!&quot;)
+            break
+    
+    # Result: 
+    # a
+    # b
+    # c
+    # d
+    # e
+    # I found the e!
+                </code></pre>
+            <p>If you want to skip over a value, or simply not do anything, you can use <code>pass</code>:</p>
+            <pre class="prettyprint lang-py"><code class="language-py">
+    for x in [&quot;dogs&quot;, &quot;cats&quot;]:
+        if x == &quot;dogs&quot;:
+            pass
+        else:
+            print(&quot;hello&quot;)
+    
+    # Result:
+    # hello
+                </code></pre>
+
+        </div>
+        <div class="refPage" id="lambda-div">
+            <h3>Lambda</h3>
+            <p>
+                Lambda is a small anonymous function. It can take any number of arguments, but can only have on expression.</p>
+            <p>That&#39;s confusing, what does it mean?</p>
+            <p>In simple terms, lambda defines one small and simple calculation that you want to complete within one line. Often, lambda expressions are used when filtering and sorting data. They take in a variable, and output the result of a calculation.</p>
+            <p>The focus is on Python right now, but I think this will help a bit with understanding. In Javascript, a lambda expression makes it slightly more obvious as to what is actually happening:</p>
+            <pre class="prettyprint lang-py"><code class="language-js">
+    let x = (x =&gt; x * 2) // lambda expression is within the parenthesis
+    console.log(x(3))
+    
+    // Result: 6
+                </code></pre>
+            <p>Don&#39;t mind how the Javascript is written, but focus more on how the lambda expression is written. I personally like lambda expressions in JS because it is clear that you are taking a variable and doing something with it (for me, it&#39;s
+                the arrow that helps show this):</p>
+            <pre class="prettyprint lang-py"><code>
+    x =&gt; x * 2
+    Take x as the variable, and then multiply it by two
+                </code></pre>
+            <p>In my opinion, you don&#39;t need to even know the word lambda to begin to understand what might be happening.</p>
+            <p>Now, back to Python. A lambda expression in python is written as <code>lambda x : x * 2</code>. This is the same as the Javascript above.</p>
+            <p>I&#39;m going to include some code from W3 schools that explains some uses of a lambda expression. To be honest, I understand the idea, but not completely. It&#39;s a bit confusing, but I am going to do my best to explain after:</p>
+            <p>A function that doubles the number you give it:</p>
+            <pre class="prettyprint lang-py"><code class="language-py">
+    def myfunc(n):  
+        return  lambda a : a * n  
+        
+    mydoubler = myfunc(2)  
+        
+    print(mydoubler(11))
+                </code></pre>
+            <p>A function that triples the number you give it:</p>
+            <pre class="prettyprint lang-py"><code class="language-py">
+    def myfunc(n):  
+        return  lambda a : a * n  
+        
+    mytripler = myfunc(3)  
+        
+    print(mytripler(11))
+                </code></pre>
+            <p>Use a lambda function to create both of those methods in the same program:</p>
+            <pre class="prettyprint lang-py"><code class="language-py">
+    def myfunc(n):  
+        return  lambda a : a * n  
+        
+    mydoubler = myfunc(2)  
+    mytripler = myfunc(3)  
+        
+    print(mydoubler(11))  
+    print(mytripler(11))
+                </code></pre>
+            <p>I personally would not worry too much about the W3 examples. They can get confusing, and I can&#39;t even wrap my head around how they take the arguments.</p>
+            <p>The most important idea to remember with lambda expressions, is that they are simple, generic expressions that can be used to simplify code and improve efficiency. Lambda expressions will reappear once I go over Maps.</p>
+
+        </div>
+        <div class="refPage" id="maps-div">
+            <h3>Maps</h3>
+            <p>
+                The Map() function executes a specified function for each item in an iterable. It works similar to a For() loop, but is more compact and often easier to use once you understand how it works.</p>
+            <p>Take the For() loop below, for example:</p>
+            <pre class="prettyprint lang-py"><code class="language-py">
+    numbers = [1, 5, 2, 7, 4, 12, 16, 25, 19]
+    larger_numbers = []
+    
+    for x in numbers:
+        if x &gt; 8:
+            larger_numbers.append(x)
+        else:
+            larger_numbers.append(False)
+    
+    print(larger_numbers)
+    # Result: [False, False, False, False, False, 12, 16, 25, 19]
+                </code></pre>
+            <p>This loop just takes numbers that are larger than 8 and creates a new list out of them, and then sets anything less than 8 as false. However, this code takes up 7 lines (not including extra lines or the print function). Using a Map(), this
+                can be cut down to only 2:</p>
+            <pre class="prettyprint lang-py"><code class="language-py">
+    numbers = [1, 5, 2, 7, 4, 12, 16, 25, 19]
+    
+    larger_numbers = map(lambda x: x if x &gt; 8 else False, numbers)
+    
+    print(list(larger_numbers))
+    # Result: [False, False, False, False, False, 12, 16, 25, 19]
+                </code></pre>
+            <p>By using the Map function, we were able to shorten our code down to only two lines. While this is a very simple example, there are more complicated uses. Note the use of the list() function when printing the results.</p>
+            <p>For example, assume you have a list of coordinates in the format [[x,y], [x,y], ...]. You want only the value, if the x value is equal to a certain number. If the x is not equal to that number, you want it to set the y value as <code>False</code>,
+                so that you can later perform other functions on it.</p>
+            <pre class="prettyprint lang-py"><code class="language-py">
+    coords = [[1,2],[3,4],[3,6],[3,9],[2,5],[7,3]]
+                </code></pre>
+            <p>In order to take only the <code>y</code> value from each coordinate, we can use a Map function:</p>
+            <pre class="prettyprint lang-py"><code class="language-py">
+    y_value = list(map(lambda x: x[1] if x[0] == 3 else False, coords))
+                </code></pre>
+            <p>Note that in this case, I needed to use an index number to get the proper coordinates. If you remember, a lambda function iterates through each value in a list. In this case, the main list is defined by the outer brackets of <code>coords</code>,
+                with each separate item being the pair of coordinates. Because of this, we need to make sure to use the proper index to get either the x or y value from the pair of cords.</p>
+            <p>Putting this all together, we get:</p>
+            <pre class="prettyprint lang-py"><code class="language-py">
+    coords = [[1,2],[3,4],[3,6],[3,9],[2,5],[7,3]]
+    y_value = list(map(lambda x: x[1] if x[0] == 3 else False, coords))
+    
+    print(y_value)
+    # Result: [False, 4, 6, 9, False, False]
+                </code></pre>
+            <p>As you can see, we now have all the y values for when x is 3.</p>
+            <p>Now I mentioned earlier to pay attention to the fact that list() was used. This is because when you use the Map() function, it returns a Map object. If you were to print a map, you would get something along the lines of <code>&lt;map object at 0x55a487727be0&gt;</code>.
+                Understanding what this really means is not super important right now, but it is important to remember that you must convert your map into a list before you try to print the result. The <code>list()</code> function does just this.</p>
+            <p>Lastly, you do not need to use a lambda function within a Map. The first argument within a Map function simply defines what you would like done to your list. If you wanted to perform something more complicated, you could pass in a different
+                function.
+            </p>
+            <p>The example below demonstrates how you could use this:</p>
+            <pre class="prettyprint lang-py"><code class="language-py">
+    def myfunc(n):  
+        return  len(n)  
+        
+    x = map(myfunc, [&#39;apple&#39;, &#39;banana&#39;, &#39;cherry&#39;])
+    print(list(x))
+    # Result: [5, 6, 6]
+                </code></pre>
+
+        </div>
+    </div>
+
+    </iframe>
+</body>
+
+</html>
