@@ -311,6 +311,298 @@
                 </code></pre>
 
         </div>
+        <div class="refPage" id="pygame-div">
+            <h3>Pygame References</h3>
+            <h4>Example 1: Official Starter Code</h4>
+            <p>The code below can be found directly from the official Pygame Docs </p>
+            <pre class="prettyprint lang-py"><code class="language-py"># Example file showing a circle moving on screen
+import pygame
+
+# pygame setup
+pygame.init()
+screen = pygame.display.set_mode((1280, 720))
+clock = pygame.time.Clock()
+running = True
+dt = 0
+
+player_pos = pygame.Vector2(screen.get_width() / 2, screen.get_height() / 2)
+
+while running:
+    # poll for events
+    # pygame.QUIT event means the user clicked X to close your window
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+
+    # fill the screen with a color to wipe away anything from last frame
+    screen.fill(&quot;purple&quot;)
+
+    pygame.draw.circle(screen, &quot;red&quot;, player_pos, 40)
+
+    keys = pygame.key.get_pressed()
+    if keys[pygame.K_w]:
+        player_pos.y -= 300 * dt
+    if keys[pygame.K_s]:
+        player_pos.y += 300 * dt
+    if keys[pygame.K_a]:
+        player_pos.x -= 300 * dt
+    if keys[pygame.K_d]:
+        player_pos.x += 300 * dt
+
+    # flip() the display to put your work on screen
+    pygame.display.flip()
+
+    # limits FPS to 60
+    # dt is delta time in seconds since last frame, used for framerate-
+    # independent physics.
+    dt = clock.tick(60) / 1000
+
+pygame.quit()
+</code></pre><br>
+            <h4>Example 2: Coin Game</h4>
+            <p>The example below builds upon the given starter code to create a simple game. Use WASD to control your character, and collect 10 coins as fast as you can. This game uses features such as player movement, score keeping, a timer, and collision
+                detection.
+            </p>
+            <pre class="prettyprint lang-py"><code class="language-py">import pygame
+import random
+import math
+# pygame setup
+pygame.init()
+screen = pygame.display.set_mode((1280, 720))
+
+clock = None
+running = None
+dt = None
+collide = None
+score = None
+player_pos = None
+rand_coin_x = None
+rand_coin_y = None
+start_ticks = None
+seconds = None
+end = None
+
+def restart():
+    global clock, running, dt, collide, score, player_pos, rand_coin_x, rand_coin_y, start_ticks, seconds, end
+    clock = pygame.time.Clock()
+    dt = 0
+    collide = False
+
+    score = 0
+
+    player_pos = pygame.Vector2(screen.get_width() / 2, screen.get_height() / 2)
+
+    rand_coin_x = random.randrange(10,(screen.get_width()) -10)
+    rand_coin_y = random.randrange(10,(screen.get_height()) -10)
+
+    start_ticks=pygame.time.get_ticks()
+    seconds = 0
+    running = True
+    
+def run_game():
+    global clock, running, dt, collide, score, player_pos, rand_coin_x, rand_coin_y, start_ticks, seconds, end
+    while running:
+        end = False
+        seconds = round((pygame.time.get_ticks()-start_ticks)/1000, 2)
+        keys = pygame.key.get_pressed()
+        # poll for events
+        # pygame.QUIT event means the user clicked X to close your window
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
+                pygame.quit()
+                
+        screen.fill(&quot;white&quot;)
+        
+        font = pygame.font.SysFont(None, 24)
+        img = font.render(f&#39;x: {int(player_pos.x)} y: {int(player_pos.y)}&#39;, True, &quot;blue&quot;)
+        screen.blit(img, (20, 20))
+        
+        score_text = font.render(f&#39;Score: {int(score)}&#39;, True, &quot;red&quot;)
+        screen.blit(score_text, (screen.get_width() / 2, 20))
+        
+        timer_text = font.render(f&#39;Time: {seconds}&#39;, True, &quot;black&quot;)
+        screen.blit(timer_text, ((screen.get_width() / 2)/2, 20))
+        
+        rect = pygame.Rect(player_pos.x-20, player_pos.y-20, 40, 40)
+
+        if not collide:
+            coin = pygame.draw.circle(screen, &quot;gold&quot;, [rand_coin_x, rand_coin_y], 10)
+            collide = coin.colliderect(rect)
+        else:
+            score = score + 1
+            rand_coin_x = random.randrange(10,(screen.get_width()) -10)
+            rand_coin_y = random.randrange(10,(screen.get_height()) -10)
+            collide = False
+            
+        
+        
+        pygame.draw.circle(screen, &quot;red&quot;, player_pos, 40)
+
+        
+        if keys[pygame.K_w]:
+            player_pos.y -= 300 * dt
+        if keys[pygame.K_s]:
+            player_pos.y += 300 * dt
+        if keys[pygame.K_a]:
+            player_pos.x -= 300 * dt
+        if keys[pygame.K_d]:
+            player_pos.x += 300 * dt
+            
+            
+        if score == 10:
+            running = False
+            end = True
+            
+        # flip() the display to put your work on screen
+        pygame.display.flip()
+
+        # limits FPS to 60
+        # dt is delta time in seconds since last frame, used for framerate-
+        # independent physics.
+        dt = clock.tick(60) / 1000
+
+restart()
+run_game()
+    
+while end:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
+            pygame.quit()
+        elif event.type == pygame.KEYDOWN and event.key == pygame.K_r:
+            restart()
+            run_game()
+            
+    screen.fill(&quot;white&quot;)
+    
+    font = pygame.font.SysFont(None, 24)
+    img = font.render(f&#39;x: {int(player_pos.x)} y: {int(player_pos.y)}&#39;, True, &quot;blue&quot;)
+    screen.blit(img, (20, 20))
+    
+    score_text = font.render(f&#39;Score: {int(score)}&#39;, True, &quot;red&quot;)
+    screen.blit(score_text, (screen.get_width() / 2, 20))
+    
+    timer_text = font.render(f&#39;Time: {seconds}&#39;, True, &quot;black&quot;)
+    screen.blit(timer_text, ((screen.get_width() / 2)/2, 20))
+    
+    pygame.draw.circle(screen, &quot;red&quot;, player_pos, 40)
+    
+    # flip() the display to put your work on screen
+    pygame.display.flip()
+
+    # limits FPS to 60
+    # dt is delta time in seconds since last frame, used for framerate-
+    # independent physics.
+    dt = clock.tick(60) / 1000
+</code></pre><br>
+            <h4>Example 3: Platforming Test</h4>
+            <p>The example below could work as starter code for a platforming game. This code has features such as player movement, collision detection, and jumping.</p>
+            <pre class="prettyprint lang-py"><code class="language-py">import pygame
+
+pygame.init()
+screen = pygame.display.set_mode((1280, 720))
+
+clock = pygame.time.Clock()
+running = True
+
+player_rect = pygame.Rect(screen.get_width()/2, (screen.get_height()*.9)-100,20,20)
+ground_rect = pygame.Rect(0, screen.get_height()*.90,screen.get_width(),screen.get_height()*.10)
+
+gravity = 4
+
+dt = 0
+
+# Stores if player is jumping or not
+isjump = False
+   
+# Force (v) up and mass m.
+v = 7
+m = 1
+
+jump_delay = 0
+seconds = 0
+
+player_pos = pygame.Vector2(screen.get_width()/2, (screen.get_height()*.9)-100)
+
+def run_game():
+    global running, player_rect, ground_rect, gravity, dt, player_pos, isjump, v, m, seconds, jump_delay 
+    while running:
+        keys = pygame.key.get_pressed()
+        
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
+                pygame.quit()
+                
+        screen.fill(&quot;white&quot;)
+        
+        collide = pygame.Rect.colliderect(ground_rect, player_rect)
+        
+        if not collide:
+            player_pos.y += gravity
+        
+        if collide:
+            gravity = 0
+            player_rect.bottom = ground_rect.top
+            player_pos.y = player_rect.bottom-10
+        
+        player_rect = pygame.Rect(player_pos.x-10, player_pos.y-10, 20, 20)
+        
+        pygame.draw.rect(screen, &quot;blue&quot;, player_rect)
+        pygame.draw.rect(screen,&quot;green&quot;,ground_rect)
+                
+        if keys[pygame.K_a]:
+            player_pos.x -= 300 * dt
+        if keys[pygame.K_d]:
+            player_pos.x += 300 * dt
+            
+        if isjump == False:
+            seconds = (pygame.time.get_ticks()-jump_delay)
+            
+            if seconds &gt;= 400:
+            # if space bar is pressed
+                if keys[pygame.K_SPACE]:
+                    jump_delay = pygame.time.get_ticks()
+                    # make isjump equal to True
+                    isjump = True
+                
+        if isjump :
+            # calculate force (F). F = 1 / 2 * mass * velocity ^ 2.
+            F =(1 / 2)*m*(v**2)
+            
+            # change in the y co-ordinate
+            player_pos.y -= F
+            
+            # decreasing velocity while going up and become negative while coming down
+            v = v-1
+            
+            # object reached its maximum height
+            if v&lt;0:
+                
+                # negative sign is added to counter negative velocity
+                m =-1
+    
+            # objected reaches its original state
+            if v == -8:
+    
+                # making isjump equal to false 
+                isjump = False
+    
+        
+                # setting original values to v and m
+                v = 7
+                m = 1
+                    
+        # flip() the display to put your work on screen
+        pygame.display.flip()
+
+        # limits FPS to 60
+        # dt is delta time in seconds since last frame, used for framerate-
+        # independent physics.
+        dt = clock.tick(60) / 1000
+        
+run_game()
+</code></pre>
+
+        </div>
     </div>
 
     </iframe>
