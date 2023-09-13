@@ -1,5 +1,5 @@
-let pageIds = ['functions', 'lists', 'forLoops', 'lambda', 'maps'];
-let pageNames = ['Functions', 'Lists', 'For Loops', 'Lambda', 'Maps'];
+let pageIds = ['functions', 'lists', 'forLoops', 'lambda', 'maps', 'pygame'];
+let pageNames = ['Functions', 'Lists', 'For Loops', 'Lambda', 'Maps', 'Pygame'];
 
 window.onload = () => {
     let linkList = document.getElementById('linkList');
